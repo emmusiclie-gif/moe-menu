@@ -106,7 +106,7 @@ function importBackup(file){
 
 document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===btn));document.querySelectorAll(".panel").forEach(x=>x.classList.toggle("active",x.id==="panel-"+btn.dataset.tab));}));
 $("addDishBtn").onclick=addDishToMenu;$("addRecipeBtn").onclick=openNewRecipe;$("emptyAddBtn").onclick=openNewRecipe;$("closeDialog").onclick=()=>$("recipeDialog").close();$("closeDetail").onclick=()=>$("detailDialog").close();
-$("recipeForm").addEventListener("submit",saveRecipe);$("addIngredientBtn").onclick=()=>addIngredientRow();$("deleteRecipeBtn").onclick=deleteRecipe;
+$("recipeForm").addEventListener("submit",saveRecipe);$("recipeCategory").addEventListener("change",()=>{const semi=$("recipeCategory").value==="Полуфабрикаты";$("recipeFields").hidden=semi;$("semiFinishedHint").hidden=!semi;if(!semi&&!$("ingredientRows").querySelector(".ingredient-row"))addIngredientRow();});$("addIngredientBtn").onclick=()=>addIngredientRow();$("deleteRecipeBtn").onclick=deleteRecipe;
 $("recipeSearch").oninput=renderRecipes;$("categoryFilter").onchange=renderRecipes;
 $("editDetailBtn").onclick=()=>{const id=selectedRecipeId;$("detailDialog").close();openEditRecipe(id);};
 $("backupBtn").onclick=()=>{const choice=confirm("Нажми ОК, чтобы скачать резервную копию. Нажми Отмена, чтобы загрузить копию из файла.");if(choice)exportBackup();else $("importFile").click();};
