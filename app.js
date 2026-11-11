@@ -7,7 +7,7 @@ let toastTimer;
 function loadState(){
   try {
     const data=JSON.parse(localStorage.getItem(KEY)) || {};
-    const recipes=Array.isArray(data.recipes)?data.recipes:[];
+    const recipes=Array.isArray(data.recipes)?data.recipes:[]; for(const r of recipes){if(r.hasRecipe===undefined)r.hasRecipe=!!((r.ingredients||[]).length||(r.steps||"").trim());if(r.category==="Полуфабрикаты"){r.hasRecipe=false;r.ingredients=[{name:r.name,qty:1,unit:"шт"}];}}
     const oldPantry=data.pantry&&typeof data.pantry==="object"?data.pantry:{};
     const pantry={};
     for(const [oldKey,value] of Object.entries(oldPantry)){
