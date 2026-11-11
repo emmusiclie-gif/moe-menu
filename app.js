@@ -33,7 +33,7 @@ function renderAll(){ renderRecipes(); renderMenu(); renderShopping(); renderCoo
 function renderRecipes(){
   const q=$("recipeSearch").value.trim().toLocaleLowerCase("ru-RU"), cat=$("categoryFilter").value;
   const list=state.recipes.filter(r=>(!cat||r.category===cat)&&(!q||r.name.toLocaleLowerCase("ru-RU").includes(q)));
-  $("recipeGrid").innerHTML=list.map(r=>`<button class="recipe-card" data-open="${r.id}"><span class="recipe-emoji">🍲</span><span class="category-tag">${esc(r.category)}</span><h3>${esc(r.name)}</h3><span class="recipe-meta">${r.time?`◷ ${r.time} мин · `:""}${r.servings||1} порц.</span></button>`).join("");
+  $("recipeGrid").innerHTML=list.map(r=>`<button class="recipe-card" data-open="${r.id}"><span class="recipe-emoji">🍲</span><span class="category-tag">${esc(r.category)}</span><h3>${esc(r.name)}</h3><span class="recipe-meta">${r.category==="Полуфабрикаты"?"Полуфабрикат":r.hasRecipe?(r.time?`◷ ${r.time} мин`:"Рецепт заполнен"):"Рецепт ещё не добавлен"}</span></button>`).join("");
   $("emptyRecipes").hidden=state.recipes.length>0;
   $("recipeGrid").hidden=list.length===0;
 }
@@ -64,7 +64,7 @@ function isAvailable(r){
   return (r.ingredients||[]).every(ing=>!!state.pantry[productKey(ing.name)]?.checked);
 }
 function renderCook(){
-  const menuRecipes=[...new Set(state.menu)].map(recipeById).filter(Boolean);
+  const menuRecipes=[...new Set(state.menu)].map(recipeById).filter(r=>r&&(r.hasRecipe||r.category==="Полуфабрикаты"));
   const ready=menuRecipes.filter(isAvailable), missing=menuRecipes.filter(r=>!isAvailable(r));
   const card=r=>`<div class="list-card"><div class="grow"><strong>${esc(r.name)}</strong><small>${esc(r.category)}</small></div><button data-menu-open="${r.id}">Открыть</button></div>`;
   $("readyRecipes").innerHTML=ready.length?ready.map(card).join(""):'<p class="muted small">Пока нет блюд, для которых отмечено достаточное количество всех ингредиентов.</p>';
