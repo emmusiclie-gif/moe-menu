@@ -55,19 +55,14 @@
 
     <section class="panel" id="panel-menu">
       <div class="section-heading"><div><span class="eyebrow">ПЛАНИРОВАНИЕ</span><h2>Моё меню</h2></div></div>
-      <p class="muted">Добавляй сюда блюда из своей кулинарной книги. Ингредиенты для покупок посчитаются автоматически.</p>
+      <p class="muted">Все твои рецепты автоматически собраны здесь по видам блюд. Нажми на название, чтобы открыть рецепт.</p>
       <div id="menuList" class="stack-list"></div>
-      <div class="add-to-menu">
-        <label for="menuRecipeSelect">Добавить блюдо</label>
-        <div class="inline-form"><select id="menuRecipeSelect"><option value="">Выбери рецепт</option></select><button class="primary-btn" id="addToMenuBtn">Добавить</button></div>
-      </div>
     </section>
 
     <section class="panel" id="panel-shopping">
       <div class="section-heading"><div><span class="eyebrow">ПОДГОТОВКА</span><h2>Продукты</h2></div><button class="soft-btn" id="clearChecksBtn">Снять отметки</button></div>
-      <p class="muted">Список собран из блюд в твоём меню. Укажи, сколько продукта уже есть дома — приложение вычтет это количество.</p>
+      <p class="muted">Отметь галочкой продукты, которые уже есть дома. Остальное останется в списке покупок.</p>
       <div id="shoppingList" class="stack-list"></div>
-      <div class="pantry-note">💡 Если единицы измерения разные (например, штуки и граммы), они показываются отдельно — приложение не будет складывать несопоставимые величины.</div>
     </section>
 
     <section class="panel" id="panel-cook">
@@ -113,7 +108,7 @@
   <dialog id="detailDialog" class="recipe-dialog">
     <div class="dialog-head"><div><span class="eyebrow">РЕЦЕПТ</span><h2 id="detailTitle"></h2></div><button class="icon-btn" id="closeDetail">×</button></div>
     <div id="detailContent"></div>
-    <div class="dialog-actions"><button class="soft-btn" id="editDetailBtn">Изменить</button><button class="primary-btn" id="detailAddMenuBtn">В меню</button></div>
+    <div class="dialog-actions"><button class="primary-btn" id="editDetailBtn">Изменить</button></div>
   </dialog>
 
   <input type="file" id="importFile" accept="application/json,.json" hidden>
