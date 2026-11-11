@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4eadb">
+  <meta name="description" content="Личная кулинарная книга и планировщик меню">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>Моё меню</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">♡</div>
+    <div><div class="eyebrow">МОЯ КУЛИНАРНАЯ КНИГА</div><h1>Моё меню</h1></div>
+    <button class="icon-btn" id="backupBtn" aria-label="Резервная копия" title="Резервная копия">⇧</button>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p class="intro-kicker">Готовим с удовольствием</p>
+      <h2>Что сегодня<br>будет вкусного?</h2>
+      <p>Твои рецепты, меню на неделю и список покупок — в одном месте.</p>
+    </section>
+
+    <nav class="tabs" aria-label="Разделы приложения">
+      <button class="tab active" data-tab="recipes">Рецепты</button>
+      <button class="tab" data-tab="menu">Моё меню</button>
+      <button class="tab" data-tab="shopping">Покупки</button>
+      <button class="tab" data-tab="cook">Что приготовить?</button>
+      <button class="tab" data-tab="outage">Без света</button>
+    </nav>
+
+    <section class="panel active" id="panel-recipes">
+      <div class="section-heading">
+        <div><span class="eyebrow">ТВОЯ КОЛЛЕКЦИЯ</span><h2>Мои рецепты</h2></div>
+        <button class="primary-btn" id="addRecipeBtn">＋ Добавить</button>
+      </div>
+      <div class="toolbar">
+        <input id="recipeSearch" type="search" placeholder="Найти блюдо…" aria-label="Поиск рецептов">
+        <select id="categoryFilter" aria-label="Категория">
+          <option value="">Все категории</option>
+          <option>Завтраки</option><option>Обеды</option><option>Ужины</option>
+          <option>Салаты и закуски</option><option>Выпечка</option><option>Десерты</option><option>Заготовки</option><option>Другое</option>
+        </select>
+      </div>
+      <div id="recipeGrid" class="recipe-grid"></div>
+      <div id="emptyRecipes" class="empty-state">
+        <div class="empty-illustration">🥣</div><h3>Книга пока пустая</h3>
+        <p>Добавь первый любимый рецепт — и он останется здесь.</p>
+        <button class="primary-btn" id="emptyAddBtn">Добавить рецепт</button>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-menu">
+      <div class="section-heading"><div><span class="eyebrow">ПЛАНИРОВАНИЕ</span><h2>Моё меню</h2></div></div>
+      <p class="muted">Добавляй сюда блюда из своей кулинарной книги. Ингредиенты для покупок посчитаются автоматически.</p>
+      <div id="menuList" class="stack-list"></div>
+      <div class="add-to-menu">
+        <label for="menuRecipeSelect">Добавить блюдо</label>
+        <div class="inline-form"><select id="menuRecipeSelect"><option value="">Выбери рецепт</option></select><button class="primary-btn" id="addToMenuBtn">Добавить</button></div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-shopping">
+      <div class="section-heading"><div><span class="eyebrow">ПОДГОТОВКА</span><h2>Продукты</h2></div><button class="soft-btn" id="clearChecksBtn">Снять отметки</button></div>
+      <p class="muted">Список собран из блюд в твоём меню. Укажи, сколько продукта уже есть дома — приложение вычтет это количество.</p>
+      <div id="shoppingList" class="stack-list"></div>
+      <div class="pantry-note">💡 Если единицы измерения разные (например, штуки и граммы), они показываются отдельно — приложение не будет складывать несопоставимые величины.</div>
+    </section>
+
+    <section class="panel" id="panel-cook">
+      <div class="section-heading"><div><span class="eyebrow">ПО НАЛИЧИЮ ПРОДУКТОВ</span><h2>Что приготовить?</h2></div></div>
+      <p class="muted">Здесь блюда, которые можно приготовить из того, что уже есть дома, и те, для которых не хватает продуктов.</p>
+      <div class="subheading">Всё необходимое есть</div><div id="readyRecipes" class="stack-list"></div>
+      <div class="subheading">Нужно докупить</div><div id="missingRecipes" class="stack-list"></div>
+    </section>
+
+    <section class="panel" id="panel-outage">
+      <div class="section-heading"><div><span class="eyebrow">НА СЛУЧАЙ ОТКЛЮЧЕНИЙ</span><h2>Без электричества</h2></div></div>
+      <p class="muted">Отмечай подходящие способы приготовления в карточке рецепта. Здесь они будут собраны отдельно.</p>
+      <div class="outage-group"><h3>Без электричества и без плиты</h3><p class="muted small">Не нужны электроприборы и нагрев.</p><div id="noPowerRecipes" class="stack-list"></div></div>
+      <div class="outage-group"><h3>Можно приготовить на газовой плите</h3><p class="muted small">Нужна только газовая плита, без духовки и электроприборов.</p><div id="gasRecipes" class="stack-list"></div></div>
+    </section>
+  </main>
+
+  <footer><span>С любовью к домашней кухне</span><span>♡</span></footer>
+
+  <dialog id="recipeDialog" class="recipe-dialog">
+    <form id="recipeForm" method="dialog">
+      <div class="dialog-head"><div><span class="eyebrow">ТВОЯ КУЛИНАРНАЯ КНИГА</span><h2 id="dialogTitle">Новый рецепт</h2></div><button type="button" class="icon-btn" id="closeDialog">×</button></div>
+      <input type="hidden" id="recipeId">
+      <label>Название блюда<input id="recipeName" required maxlength="90" placeholder="Например, домашние сырники"></label>
+      <div class="two-col">
+        <label>Категория<select id="recipeCategory"><option>Завтраки</option><option>Обеды</option><option>Ужины</option><option>Салаты и закуски</option><option>Выпечка</option><option>Десерты</option><option>Заготовки</option><option>Другое</option></select></label>
+        <label>Время, минут<input id="recipeTime" type="number" min="0" placeholder="30"></label>
+      </div>
+      <label>Количество порций<input id="recipeServings" type="number" min="1" value="2"></label>
+      <div class="field-title">Ингредиенты</div>
+      <p class="hint">Каждый ингредиент — отдельной строкой: продукт — количество — единица. Например: Мука — 200 — г.</p>
+      <div id="ingredientRows"></div>
+      <button type="button" class="soft-btn add-row" id="addIngredientBtn">＋ Добавить ингредиент</button>
+      <label>Приготовление<textarea id="recipeSteps" rows="5" placeholder="Опиши шаги приготовления…" required></textarea></label>
+      <label>Заметки<textarea id="recipeNotes" rows="2" placeholder="Секреты, замены, советы…"></textarea></label>
+      <div class="field-title">Способ приготовления</div>
+      <label class="check-line"><input id="recipeNoPower" type="checkbox"> Можно приготовить без электричества и без плиты</label>
+      <label class="check-line"><input id="recipeGas" type="checkbox"> Можно приготовить на газовой плите (без духовки и электроприборов)</label>
+      <div class="dialog-actions"><button type="button" class="soft-btn" id="deleteRecipeBtn" hidden>Удалить</button><button type="submit" class="primary-btn">Сохранить рецепт</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="detailDialog" class="recipe-dialog">
+    <div class="dialog-head"><div><span class="eyebrow">РЕЦЕПТ</span><h2 id="detailTitle"></h2></div><button class="icon-btn" id="closeDetail">×</button></div>
+    <div id="detailContent"></div>
+    <div class="dialog-actions"><button class="soft-btn" id="editDetailBtn">Изменить</button><button class="primary-btn" id="detailAddMenuBtn">В меню</button></div>
+  </dialog>
+
+  <input type="file" id="importFile" accept="application/json,.json" hidden>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

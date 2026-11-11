@@ -1,0 +1,18 @@
+{
+  "name": "Моё меню",
+  "short_name": "Моё меню",
+  "description": "Личная кулинарная книга и планировщик меню",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f0e6",
+  "theme_color": "#f4eadb",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
