@@ -18,19 +18,7 @@
   </header>
 
   <main>
-    <section class="intro">
-      <p class="intro-kicker">Готовим с удовольствием</p>
-      <h2>Что сегодня<br>будет вкусного?</h2>
-      <p>Твои рецепты, меню на неделю и список покупок — в одном месте.</p>
-    </section>
-
-    <nav class="tabs" aria-label="Разделы приложения">
-      <button class="tab active" data-tab="recipes">Рецепты</button>
-      <button class="tab" data-tab="menu">Моё меню</button>
-      <button class="tab" data-tab="shopping">Покупки</button>
-      <button class="tab" data-tab="cook">Что приготовить?</button>
-      <button class="tab" data-tab="outage">Без света</button>
-    </nav>
+    <nav class="tabs" aria-label="Разделы приложения"><button class="tab" data-tab="menu">Меню</button><button class="tab active" data-tab="recipes">Рецепты</button><button class="tab" data-tab="shopping">Покупки</button><button class="tab" data-tab="cook">Что приготовить?</button></nav>
 
     <section class="panel active" id="panel-recipes">
       <div class="section-heading">
@@ -42,7 +30,7 @@
         <select id="categoryFilter" aria-label="Категория">
           <option value="">Все категории</option>
           <option>Завтраки</option><option>Обеды</option><option>Ужины</option>
-          <option>Салаты и закуски</option><option>Выпечка</option><option>Десерты</option><option>Заготовки</option><option>Другое</option>
+          <option>Салаты и закуски</option><option>Выпечка</option><option>Десерты</option><option>Заготовки</option><option>Полуфабрикаты</option><option>Другое</option>
         </select>
       </div>
       <div id="recipeGrid" class="recipe-grid"></div>
@@ -55,30 +43,24 @@
 
     <section class="panel" id="panel-menu">
       <div class="section-heading"><div><span class="eyebrow">ПЛАНИРОВАНИЕ</span><h2>Моё меню</h2></div></div>
-      <p class="muted">Все твои рецепты автоматически собраны здесь по видам блюд. Нажми на название, чтобы открыть рецепт.</p>
+      <div class="quick-add"><input id="menuDishName" maxlength="90" placeholder="Название блюда"><select id="menuDishCategory"><option>Завтраки</option><option>Обеды</option><option>Ужины</option><option>Салаты и закуски</option><option>Выпечка</option><option>Десерты</option><option>Заготовки</option><option>Полуфабрикаты</option><option>Другое</option></select><button class="primary-btn" id="addDishBtn">＋ Добавить</button></div>
       <div id="menuList" class="stack-list"></div>
     </section>
 
     <section class="panel" id="panel-shopping">
       <div class="section-heading"><div><span class="eyebrow">ПОДГОТОВКА</span><h2>Продукты</h2></div><button class="soft-btn" id="clearChecksBtn">Снять отметки</button></div>
-      <p class="muted">Отметь галочкой продукты, которые уже есть дома. Остальное останется в списке покупок.</p>
+      
       <div id="shoppingList" class="stack-list"></div>
     </section>
 
     <section class="panel" id="panel-cook">
       <div class="section-heading"><div><span class="eyebrow">ПО НАЛИЧИЮ ПРОДУКТОВ</span><h2>Что приготовить?</h2></div></div>
-      <p class="muted">Здесь блюда, которые можно приготовить из того, что уже есть дома, и те, для которых не хватает продуктов.</p>
+      
       <div class="subheading">Всё необходимое есть</div><div id="readyRecipes" class="stack-list"></div>
       <div class="subheading">Нужно докупить</div><div id="missingRecipes" class="stack-list"></div>
     </section>
 
-    <section class="panel" id="panel-outage">
-      <div class="section-heading"><div><span class="eyebrow">НА СЛУЧАЙ ОТКЛЮЧЕНИЙ</span><h2>Без электричества</h2></div></div>
-      <p class="muted">Отмечай подходящие способы приготовления в карточке рецепта. Здесь они будут собраны отдельно.</p>
-      <div class="outage-group"><h3>Без электричества и без плиты</h3><p class="muted small">Не нужны электроприборы и нагрев.</p><div id="noPowerRecipes" class="stack-list"></div></div>
-      <div class="outage-group"><h3>Можно приготовить на газовой плите</h3><p class="muted small">Нужна только газовая плита, без духовки и электроприборов.</p><div id="gasRecipes" class="stack-list"></div></div>
-    </section>
-  </main>
+</main>
 
   <footer><span>С любовью к домашней кухне</span><span>♡</span></footer>
 
@@ -92,15 +74,15 @@
         <label>Время, минут<input id="recipeTime" type="number" min="0" placeholder="30"></label>
       </div>
       <label>Количество порций<input id="recipeServings" type="number" min="1" value="2"></label>
-      <div class="field-title">Ингредиенты</div>
+      <div id="recipeFields"><div class="field-title">Ингредиенты</div>
       <p class="hint">Каждый ингредиент — отдельной строкой: продукт — количество — единица. Например: Мука — 200 — г.</p>
       <div id="ingredientRows"></div>
       <button type="button" class="soft-btn add-row" id="addIngredientBtn">＋ Добавить ингредиент</button>
       <label>Приготовление<textarea id="recipeSteps" rows="5" placeholder="Опиши шаги приготовления…" required></textarea></label>
-      <label>Заметки<textarea id="recipeNotes" rows="2" placeholder="Секреты, замены, советы…"></textarea></label>
+      <label>Заметки<textarea id="recipeNotes" rows="2" placeholder="Секреты, замены, советы…"></textarea></label></div>
+      <p id="semiFinishedHint" class="hint" hidden>Полуфабрикат не требует рецепта. Его название автоматически попадёт в список ингредиентов и покупок.</p>
       <div class="field-title">Способ приготовления</div>
-      <label class="check-line"><input id="recipeNoPower" type="checkbox"> Можно приготовить без электричества и без плиты</label>
-      <label class="check-line"><input id="recipeGas" type="checkbox"> Можно приготовить на газовой плите (без духовки и электроприборов)</label>
+      <label class="check-line"><input id="recipeNoPower" type="checkbox"> Подходит, когда нет электричества</label>
       <div class="dialog-actions"><button type="button" class="soft-btn" id="deleteRecipeBtn" hidden>Удалить</button><button type="submit" class="primary-btn">Сохранить рецепт</button></div>
     </form>
   </dialog>
@@ -111,6 +93,7 @@
     <div class="dialog-actions"><button class="primary-btn" id="editDetailBtn">Изменить</button></div>
   </dialog>
 
+  <nav class="bottom-tabs" aria-label="Навигация"><button class="tab" data-tab="menu"><span>☷</span>Меню</button><button class="tab active" data-tab="recipes"><span>📖</span>Рецепты</button><button class="tab" data-tab="shopping"><span>🧺</span>Покупки</button><button class="tab" data-tab="cook"><span>🍳</span>Приготовить</button></nav>
   <input type="file" id="importFile" accept="application/json,.json" hidden>
   <div id="toast" class="toast" role="status"></div>
   <script src="app.js"></script>
